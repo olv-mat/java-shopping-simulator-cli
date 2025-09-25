@@ -1,10 +1,12 @@
 package com.github.olvmat.shoppingsimulatorcli.main;
 
-import com.github.olvmat.shoppingsimulatorcli.model.CreditCard;
+import com.github.olvmat.shoppingsimulatorcli.model.card.Card;
+import com.github.olvmat.shoppingsimulatorcli.model.list.ProductList;
 
 public class Main {
     public static void main(String[] args) {
-        CreditCard creditCard = new CreditCard("Matheus Oliveira", 5000);
+        Card card = new Card("Matheus Oliveira", 5000);
+        ProductList productList = new ProductList();
         System.out.println("Java Shopping Simulator");
     }
 }

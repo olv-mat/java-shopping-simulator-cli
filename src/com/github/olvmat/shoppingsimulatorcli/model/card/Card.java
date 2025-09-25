@@ -1,10 +1,10 @@
-package com.github.olvmat.shoppingsimulatorcli.model;
+package com.github.olvmat.shoppingsimulatorcli.model.card;
 
-public class CreditCard {
+public class Card {
     private final String cardholder;
     private final double limit;
 
-    public CreditCard(
+    public Card(
             String cardholder,
             double limit
     ) {
