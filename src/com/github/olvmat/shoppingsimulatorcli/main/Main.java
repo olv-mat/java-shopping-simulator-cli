@@ -2,7 +2,7 @@ package com.github.olvmat.shoppingsimulatorcli.main;
 
 import com.github.olvmat.shoppingsimulatorcli.console.ConsoleDisplay;
 import com.github.olvmat.shoppingsimulatorcli.console.ConsoleInput;
-import com.github.olvmat.shoppingsimulatorcli.model.Card;
+import com.github.olvmat.shoppingsimulatorcli.model.CreditCard;
 import com.github.olvmat.shoppingsimulatorcli.model.ProductList;
 import com.github.olvmat.shoppingsimulatorcli.model.Product;
 
@@ -13,28 +13,33 @@ public class Main {
     public static void main(String[] args) {
         ConsoleDisplay consoleDisplay = new ConsoleDisplay();
         ConsoleInput consoleInput = new ConsoleInput();
-        Card card = new Card("Matheus Oliveira", 10000);
+        CreditCard creditCard = new CreditCard(
+                "Matheus Oliveira",
+                10000
+        );
         ProductList productList = new ProductList();
 
-        String cardholder = card.getCardholder();
+        String cardholder = creditCard.getCardholder();
         List<Product> products = productList.getProducts();
         List<Product> shoppingList = new LinkedList<>();
 
         consoleDisplay.display("Java Shopping Simulator\n");
         while (true) {
             consoleDisplay.display(String.format("Hello %s, What do You Want to Buy?%n", cardholder));
-            consoleDisplay.display(String.format("Limit: %.2f%n", card.getLimit()));
-            consoleDisplay.displayList(products);
+            consoleDisplay.display(String.format("Limit: %.2f%n", creditCard.getLimit()));
+            consoleDisplay.displayList("Available Products", products);
 
             int option;
             do {
                 consoleDisplay.display("Option: ");
                 option = consoleInput.readInt();
-            } while (option > (products.size() + 1));
+                if (option < 1 || option > products.size()) {
+                    consoleDisplay.display("Invalid Option, Try Again!\n");
+                }
+            } while (option < 1 || option > products.size());
 
             Product product = products.get(option - 1);
-            boolean purchaseStatus = card.purchase(product);
-            if (purchaseStatus) {
+            if (creditCard.purchase(product)) {
                 shoppingList.add(product);
             }
 
@@ -42,13 +47,16 @@ public class Main {
             consoleDisplay.display("""
                     1 - Yes
                     2 - No
-                    """);
+                    """
+            );
             consoleDisplay.display("Option: ");
             switch (consoleInput.readInt()) {
                 case 1:
+                    System.out.println("Returning...");
                     break;
                 case 2:
-                    consoleDisplay.displayList(shoppingList);
+                    consoleDisplay.displayList("Your Shopping Cart", shoppingList);
+                    System.out.println("Goodbye!");
                     return;
                 default:
                     consoleDisplay.display("Invalid Option\n");
