@@ -1,6 +1,4 @@
-package com.github.olvmat.shoppingsimulatorcli.model.list;
-
-import com.github.olvmat.shoppingsimulatorcli.model.product.Product;
+package com.github.olvmat.shoppingsimulatorcli.model;
 
 import java.util.ArrayList;
 import java.util.List;

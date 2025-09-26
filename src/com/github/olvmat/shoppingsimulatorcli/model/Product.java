@@ -1,8 +1,8 @@
-package com.github.olvmat.shoppingsimulatorcli.model.product;
+package com.github.olvmat.shoppingsimulatorcli.model;
 
 public class Product {
     private final String name;
-    private final double price;
+    protected final double price;
 
     public Product(
             String name,
@@ -14,6 +14,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return this.name + " (" + this.price + ")";
+        return String.format("%s (%.2f)", this.name, this.price);
     }
 }
