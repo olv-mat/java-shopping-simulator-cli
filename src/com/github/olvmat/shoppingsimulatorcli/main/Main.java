@@ -6,6 +6,7 @@ import com.github.olvmat.shoppingsimulatorcli.model.CreditCard;
 import com.github.olvmat.shoppingsimulatorcli.model.ProductList;
 import com.github.olvmat.shoppingsimulatorcli.model.Product;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class Main {
                     System.out.println("Returning...");
                     break;
                 case 2:
+                    Collections.sort(shoppingList);
                     consoleDisplay.displayList("Your Shopping Cart", shoppingList);
                     System.out.println("Goodbye!");
                     return;
