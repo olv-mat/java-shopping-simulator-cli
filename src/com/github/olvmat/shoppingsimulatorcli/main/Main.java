@@ -14,10 +14,7 @@ public class Main {
     public static void main(String[] args) {
         ConsoleDisplay consoleDisplay = new ConsoleDisplay();
         ConsoleInput consoleInput = new ConsoleInput();
-        CreditCard creditCard = new CreditCard(
-                "Matheus Oliveira",
-                10000
-        );
+        CreditCard creditCard = new CreditCard("Matheus Oliveira", 10000);
         ProductList productList = new ProductList();
 
         String cardholder = creditCard.getCardholder();
@@ -28,41 +25,37 @@ public class Main {
         while (true) {
             consoleDisplay.display(String.format("Hello %s, What do You Want to Buy?%n", cardholder));
             consoleDisplay.display(String.format("Limit: %.2f%n", creditCard.getLimit()));
-            consoleDisplay.displayList("Available Products", products);
+            consoleDisplay.displayList("Available Products:", products);
 
-            int option;
-            do {
-                consoleDisplay.display("Option: ");
-                option = consoleInput.readInt();
-                if (option < 1 || option > products.size()) {
-                    consoleDisplay.display("Invalid Option, Try Again!\n");
-                }
-            } while (option < 1 || option > products.size());
-
+            int option = readValidOption(consoleDisplay, consoleInput, products.size());
             Product product = products.get(option - 1);
             if (creditCard.purchase(product)) {
                 shoppingList.add(product);
             }
 
-            consoleDisplay.display("Want to Buy Something Else?\n");
-            consoleDisplay.display("""
-                    1 - Yes
-                    2 - No
-                    """
-            );
-            consoleDisplay.display("Option: ");
-            switch (consoleInput.readInt()) {
-                case 1:
-                    System.out.println("Returning...");
-                    break;
-                case 2:
-                    Collections.sort(shoppingList);
-                    consoleDisplay.displayList("Your Shopping Cart", shoppingList);
-                    System.out.println("Goodbye!");
-                    return;
-                default:
-                    consoleDisplay.display("Invalid Option\n");
+            consoleDisplay.displayMenu("Want to Buy Something Else?", "Yes", "No");
+            option = readValidOption(consoleDisplay, consoleInput, 2);
+            if (option == 2) {
+                Collections.sort(shoppingList);
+                consoleDisplay.displayList("Your Shopping Cart:", shoppingList);
+                break;
             }
         }
+    }
+
+    private static int readValidOption(
+            ConsoleDisplay consoleDisplay,
+            ConsoleInput consoleInput,
+            int limit
+    ) {
+        int option;
+        do {
+            consoleDisplay.display("Option: ");
+            option = consoleInput.readInt();
+            if (option < 1 || option > limit) {
+                consoleDisplay.display("Invalid Option, Try Again!\n");
+            }
+        } while (option < 1 || option > limit);
+        return  option;
     }
 }

@@ -23,7 +23,7 @@ public class CreditCard {
     public boolean purchase(Product product) {
         double price = product.price;
         if (price > this.limit) {
-            System.out.println("Insufficient Limit");
+            System.out.println("Insufficient Limit".toUpperCase());
             return false;
         }
         this.limit -= price;
